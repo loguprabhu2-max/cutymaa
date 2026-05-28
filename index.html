@@ -61,7 +61,7 @@ body{font-family:'Outfit',sans-serif;background:linear-gradient(-45deg,#2b0b30,#
 @keyframes teddyWalk{0%{left:-20%;width:70px;height:70px;transform:rotate(0deg)}15%{transform:rotate(-8deg)}30%{transform:rotate(8deg)}45%{transform:rotate(-6deg)}60%{left:50%;width:140px;height:140px;transform:translateX(-50%) rotate(6deg)}80%{left:50%;width:220px;height:220px;transform:translateX(-50%) rotate(-3deg)}100%{left:50%;width:260px;height:260px;transform:translateX(-50%) rotate(0deg)}}
 .dust{position:absolute;bottom:60px;font-size:1.2rem;opacity:0;pointer-events:none;animation:dustPop .5s ease forwards;}
 @keyframes dustPop{0%{transform:translateY(0) scale(0);opacity:.8}100%{transform:translateY(-30px) scale(1.5);opacity:0}}
-#bdayReveal{display:none;flex-direction:column;align-items:center;text-align:center;gap:0;}
+#bdayReveal{display:none;flex-direction:column;align-items:center;text-align:center;gap:0;width:100%;overflow-y:auto;padding-bottom:20px;}
 #bdayReveal.show{display:flex;}
 #teddyBig{width:220px;height:220px;border-radius:50%;overflow:hidden;border:4px solid rgba(255,255,255,.3);box-shadow:0 20px 50px rgba(0,0,0,.5),0 0 60px rgba(255,150,180,.3);margin-bottom:16px;animation:teddyReveal .8s ease forwards,teddyIdle2 3.5s .8s ease-in-out infinite;}
 #teddyBig img{width:100%;height:100%;object-fit:cover;object-position:center top;}
@@ -87,7 +87,7 @@ body{font-family:'Outfit',sans-serif;background:linear-gradient(-45deg,#2b0b30,#
 @keyframes lidFly2{0%{transform:translateX(-50%) translateY(0) rotate(0deg);opacity:1}100%{transform:translateX(calc(-50% - 100px)) translateY(-130px) rotate(-45deg);opacity:0}}
 .gift-msg-overlay{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .8s ease;background:rgba(0,0,0,.5);backdrop-filter:blur(10px);}
 .gift-msg-overlay.show{opacity:1;pointer-events:auto;}
-.gift-msg-inner{background:rgba(255,255,255,.1);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.25);border-radius:28px;padding:44px 36px;max-width:480px;width:100%;text-align:center;box-shadow:0 30px 70px rgba(0,0,0,.5);transform:translateY(60px) scale(.9);transition:all 1s cubic-bezier(.175,.885,.32,1.275);}
+.gift-msg-inner{background:rgba(255,255,255,.1);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.25);border-radius:28px;padding:44px 36px;max-width:480px;width:100%;text-align:center;box-shadow:0 30px 70px rgba(0,0,0,.5);transform:translateY(60px) scale(.9);transition:all 1s cubic-bezier(.175,.885,.32,1.275);max-height:85vh;overflow-y:auto;}
 .gift-msg-overlay.show .gift-msg-inner{transform:translateY(0) scale(1);}
 .gift-msg-inner h2{font-family:'Dancing Script',cursive;font-size:2.6rem;background:linear-gradient(45deg,#ffdf85,#ff9a9e,#fecfef);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:14px;line-height:1.2;}
 .gift-msg-inner p{font-size:1rem;line-height:1.85;color:rgba(255,255,255,.92);margin-bottom:26px;}
@@ -145,7 +145,7 @@ p.subtitle{font-size:1.4rem;color:rgba(255,255,255,.9);margin-bottom:35px;font-w
 .btn-interactive:hover::before{left:200%;}
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(15px);display:flex;justify-content:center;align-items:center;opacity:0;pointer-events:none;transition:opacity .6s ease;z-index:1000;padding:20px;}
 .modal-overlay.active{opacity:1;pointer-events:auto;}
-.modal-content{background:linear-gradient(135deg,rgba(255,255,255,.15),rgba(255,255,255,.05));border:1px solid rgba(255,255,255,.2);padding:50px 40px;border-radius:25px;max-width:550px;width:100%;text-align:center;transform:translateY(60px) scale(.9);transition:all .6s cubic-bezier(.175,.885,.32,1.275);box-shadow:0 25px 60px rgba(0,0,0,.5);position:relative;overflow:hidden;}
+.modal-content{background:linear-gradient(135deg,rgba(255,255,255,.15),rgba(255,255,255,.05));border:1px solid rgba(255,255,255,.2);padding:50px 40px;border-radius:25px;max-width:550px;width:100%;text-align:center;transform:translateY(60px) scale(.9);transition:all .6s cubic-bezier(.175,.885,.32,1.275);box-shadow:0 25px 60px rgba(0,0,0,.5);position:relative;overflow:hidden;max-height:85vh;overflow-y:auto;}
 .modal-content::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(255,179,198,.1) 0%,transparent 60%);animation:slowSpin 10s linear infinite;z-index:-1;pointer-events:none;}
 @keyframes slowSpin{to{transform:rotate(360deg)}}
 .modal-overlay.active .modal-content{transform:translateY(0) scale(1);}
@@ -383,19 +383,12 @@ p.subtitle{font-size:1.4rem;color:rgba(255,255,255,.9);margin-bottom:35px;font-w
     <div class="yt-progress-bar-bg"><div class="yt-progress-bar-fill" id="ytProgressBar"></div></div>
     <div class="yt-video-area">
       <div class="yt-iframe-wrap" id="ytIframeWrap">
-        <!--
-          ╔══════════════════════════════════════════╗
-          ║  REPLACE: YOUR_GDRIVE_VIDEO_FILE_ID      ║
-          ║  with your actual Google Drive file ID   ║
-          ║  Get it from the share link:             ║
-          ║  drive.google.com/file/d/FILE_ID/view    ║
-          ╚══════════════════════════════════════════╝
-        -->
         <iframe
           id="ytIframe"
-          src="https://drive.google.com/file/d/YOUR_GDRIVE_VIDEO_FILE_ID/preview"
-          allow="autoplay"
-          allowfullscreen>
+          src="https://www.youtube.com/embed/3yokonGQt5k?enablejsapi=1&rel=0&modestbranding=1"
+          allow="autoplay; encrypted-media"
+          allowfullscreen
+          style="position:absolute;inset:0;width:100%;height:100%;border:none;">
         </iframe>
       </div>
       <div class="yt-overlay-end" id="ytEndOverlay">
@@ -418,7 +411,7 @@ p.subtitle{font-size:1.4rem;color:rgba(255,255,255,.9);margin-bottom:35px;font-w
         <button class="yt-action-pill">💾 Save</button>
         <button class="yt-action-pill">•••</button>
       </div>
-      <div class="yt-desc">This video was made just for you, on your very special day. Play it, feel it, and know how deeply you are loved. 🎂✨</div>
+      <div class="yt-desc">This video was made just for you, on your very special day. Play it, feel it, and know how deeply you are loved. 🎂✨<br><span style="font-size:.75rem;color:#666;">If the video doesn't play, <a href="https://drive.google.com/file/d/1WQV4aAZc3WNZo162FDtvr_0Bwy8FuBbs/view" target="_blank" style="color:#aaa;text-decoration:underline;">open it here ↗</a></span></div>
     </div>
     <div class="yt-next-section">
       <div class="yt-next-label">Up Next</div>
@@ -440,7 +433,7 @@ p.subtitle{font-size:1.4rem;color:rgba(255,255,255,.9);margin-bottom:35px;font-w
     <div class="sp-header">
       <div>
         <div class="sp-header-title">Birthday Playlist 🎂</div>
-        <div class="sp-header-sub">Made for you · 2 songs · all the love 💖</div>
+        <div class="sp-header-sub">Made for you · 2 songs · all the love 💖<br><span style="font-size:.7rem;color:#555;">Songs not playing? <a href="https://drive.google.com/file/d/1p3XGmp02hHdc6G4ZjjVRQFxgmoOldSF_/view" target="_blank" style="color:#777;text-decoration:underline;">Song 1 ↗</a> &nbsp; <a href="https://drive.google.com/file/d/1ABGXlSpuHlu5_om7cPZMFZ3NV5OUAoqJ/view" target="_blank" style="color:#777;text-decoration:underline;">Song 2 ↗</a></span></div>
       </div>
       <button onclick="goTo(3)" style="background:none;border:none;color:#b3b3b3;font-size:.8rem;cursor:pointer;">← Back</button>
     </div>
@@ -526,9 +519,9 @@ Ipo iruka mariye namma happy jolly ah future laiyum irupom nee ethuku kavala pad
    GOOGLE DRIVE FILE IDs
    ↓ Replace these placeholders ↓
 ═══════════════════════════ */
-const GDRIVE_VIDEO_ID  = 'https://drive.google.com/file/d/1WQV4aAZc3WNZo162FDtvr_0Bwy8FuBbs/view';   // video
-const GDRIVE_SONG1_ID  = 'YOUR_GDRIVE_SONG1_FILE_ID';   // first song
-const GDRIVE_SONG2_ID  = 'YOUR_GDRIVE_SONG2_FILE_ID';   // second song
+const GDRIVE_VIDEO_ID  = '1WQV4aAZc3WNZo162FDtvr_0Bwy8FuBbs';   // video
+const GDRIVE_SONG1_ID  = '1p3XGmp02hHdc6G4ZjjVRQFxgmoOldSF_';   // first song
+const GDRIVE_SONG2_ID  = '1ABGXlSpuHlu5_om7cPZMFZ3NV5OUAoqJ';   // second song
 
 function gdriveStream(id){ return `https://drive.google.com/uc?export=download&id=${id}`; }
 
@@ -730,29 +723,48 @@ let videoInited=false;
 function initVideo(){
   if(videoInited)return; videoInited=true;
 
-  // Wire iframe src with real file ID
-  const iframe=document.getElementById('ytIframe');
-  iframe.src=`https://drive.google.com/file/d/${GDRIVE_VIDEO_ID}/preview`;
+  // YouTube IFrame API — load script once
+  if(!window.YT){
+    const tag=document.createElement('script');
+    tag.src='https://www.youtube.com/iframe_api';
+    document.head.appendChild(tag);
+  }
 
-  // Listen for postMessage from Google Drive iframe (fires on video end in some browsers)
-  window.addEventListener('message', function onMsg(e){
-    if(typeof e.data==='string'){
-      const d=e.data.toLowerCase();
-      if(d.includes('ended')||d.includes('finish')||d.includes('complete')){
-        unlockVideoNext();
-        window.removeEventListener('message',onMsg);
+  // Progress bar fake-ticker (YouTube API doesn't give timeupdate)
+  let ytPlayer=null, progressTimer=null;
+
+  window.onYouTubeIframeAPIReady=function(){
+    ytPlayer=new YT.Player('ytIframe',{
+      events:{
+        onStateChange:function(e){
+          if(e.data===YT.PlayerState.ENDED){
+            unlockVideoNext();
+            clearInterval(progressTimer);
+            document.getElementById('ytProgressBar').style.width='100%';
+          }
+          if(e.data===YT.PlayerState.PLAYING){
+            progressTimer=setInterval(()=>{
+              if(!ytPlayer) return;
+              const cur=ytPlayer.getCurrentTime();
+              const dur=ytPlayer.getDuration();
+              if(dur>0) document.getElementById('ytProgressBar').style.width=(cur/dur*100)+'%';
+            },500);
+          }
+          if(e.data===YT.PlayerState.PAUSED){ clearInterval(progressTimer); }
+        }
       }
-    }
-    // Google Drive sometimes sends an object
-    if(e.data && e.data.event==='ended'){ unlockVideoNext(); window.removeEventListener('message',onMsg); }
-  });
+    });
+  };
 
-  // Show manual fallback tip after 10 seconds so she can proceed if postMessage doesn't fire
+  // If API already loaded, init immediately
+  if(window.YT && window.YT.Player) window.onYouTubeIframeAPIReady();
+
+  // Show manual fallback after 15s
   setTimeout(()=>{
     if(document.getElementById('btnYtNext').disabled){
       document.getElementById('ytManualTip').style.display='block';
     }
-  },10000);
+  },15000);
 }
 
 function unlockVideoNext(){
